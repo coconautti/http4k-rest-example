@@ -5,6 +5,10 @@ plugins {
 
 repositories {
     mavenCentral()
+
+    maven {
+        url 'https://dl.bintray.com/kotlin/exposed/'
+    }
 }
 
 dependencies {
@@ -12,6 +16,9 @@ dependencies {
     compile 'org.http4k:http4k-core:2.11.2'
     compile 'org.http4k:http4k-server-netty:2.11.2'
     compile 'org.http4k:http4k-format-jackson:2.11.2'
+    compile 'com.h2database:h2:1.4.196'
+    compile 'org.jetbrains.exposed:exposed:0.8.1'
+    compile 'org.slf4j:slf4j-simple:1.7.25'
 }
 
 mainClassName = 'example.ApplicationKt'
