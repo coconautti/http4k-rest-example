@@ -1,18 +1,19 @@
 package example
 
-import org.http4k.core.HttpHandler
-import org.http4k.core.Method
-import org.http4k.core.Response
-import org.http4k.core.Status
+import org.http4k.core.*
 import org.http4k.routing.RoutingHttpHandler
 import org.http4k.routing.bind
+import org.http4k.format.Jackson.auto
+
+data class Ping(val status: String)
 
 object StatusController {
+    val pingLens = Body.auto<Ping>().toLens()
 
     fun routes(): RoutingHttpHandler {
 
         val ping: HttpHandler = {
-            Response(Status.OK).body("ok")
+            pingLens.inject(Ping("ok"), Response(Status.OK))
         }
 
         return org.http4k.routing.routes(
