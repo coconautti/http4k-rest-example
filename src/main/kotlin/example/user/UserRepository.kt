@@ -6,6 +6,8 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 
+class UserNotFoundException(message: String) : RuntimeException(message)
+
 object UserRepository {
     object Users : Table() {
         val id = varchar("id", 36).primaryKey()
@@ -34,25 +36,21 @@ object UserRepository {
         }
     }
 
-    fun findById(id: String, handler: (User?) -> Any): Any {
+    fun findById(id: String): User {
         return transaction {
             val row = Users
                     .select { Users.id.eq(id) }
                     .firstOrNull()
-            if (row != null) {
-                handler(User(row[Users.id], row[Users.email], row[Users.firstName], row[Users.lastName]))
-            } else {
-                handler(null)
-            }
+            row ?: throw UserNotFoundException("User not found")
+            User(row[Users.id], row[Users.email], row[Users.firstName], row[Users.lastName])
         }
     }
 
-    fun exists(email: String, handler: (Boolean) -> Any): Any {
+    fun exists(email: String): Boolean {
         return transaction {
-            handler(Users
+            Users
                     .select { Users.email.eq(email) }
                     .count() > 0
-            )
         }
     }
 }
