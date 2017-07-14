@@ -34,24 +34,25 @@ object UserRepository {
         }
     }
 
-    fun findById(id: String): User? {
+    fun findById(id: String, handler: (User?) -> Any): Any {
         return transaction {
             val row = Users
                     .select { Users.id.eq(id) }
                     .firstOrNull()
             if (row != null) {
-                User(row[Users.id], row[Users.email], row[Users.firstName], row[Users.lastName])
+                handler(User(row[Users.id], row[Users.email], row[Users.firstName], row[Users.lastName]))
             } else {
-                null
+                handler(null)
             }
         }
     }
 
-    fun exists(email: String): Boolean {
+    fun exists(email: String, handler: (Boolean) -> Any): Any {
         return transaction {
-            Users
+            handler(Users
                     .select { Users.email.eq(email) }
                     .count() > 0
+            )
         }
     }
 }

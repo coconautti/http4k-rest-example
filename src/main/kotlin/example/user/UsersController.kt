@@ -23,42 +23,44 @@ object UsersController {
 
         val register: HttpHandler = { request ->
             val req = registerRequest.extract(request)
-
-            if (UserRepository.exists(req.email)) {
-                val error = Error(code = 409, message = "user with email address ${req.email } already exists")
-                errorLens.inject(error, Response(Status.CONFLICT))
-            } else {
-                val user = User(UUID.randomUUID().toString(), req.email, req.firstName, req.lastName)
-                UserRepository.create(user)
-                userLens.inject(user, Response(Status.OK))
-            }
+            UserRepository.exists(req.email) { exists ->
+                if (exists) {
+                    val error = Error(code = 409, message = "User with email address ${req.email} already exists")
+                    errorLens.inject(error, Response(Status.CONFLICT))
+                } else {
+                    val user = User(UUID.randomUUID().toString(), req.email, req.firstName, req.lastName)
+                    UserRepository.create(user)
+                    userLens.inject(user, Response(Status.OK))
+                }
+            } as Response
         }
 
         val findById: HttpHandler = { request ->
             val id = pathId(request)
-            val user = UserRepository.findById(id)
-            if (user != null) {
-                userLens.inject(user, Response(Status.OK))
-            } else {
-                val error = Error(code = 404, message = "no such user")
-                errorLens.inject(error, Response(Status.NOT_FOUND))
-            }
+            UserRepository.findById(id) { user ->
+                if (user != null) {
+                    userLens.inject(user, Response(Status.OK))
+                } else {
+                    val error = Error(code = 404, message = "User not found")
+                    errorLens.inject(error, Response(Status.NOT_FOUND))
+                }
+            } as Response
         }
 
         val update: HttpHandler = { request ->
             val id = pathId(request)
             val req = updateRequest(request)
-
-            val user = UserRepository.findById(id)
-            if (user != null) {
-                if (req.firstName != null) user.firstName = req.firstName
-                if (req.lastName != null) user.lastName = req.lastName
-                UserRepository.update(user)
-                userLens.inject(user, Response(Status.OK))
-            } else {
-                val error = Error(code = 404, message = "no such user")
-                errorLens.inject(error, Response(Status.NOT_FOUND))
-            }
+            UserRepository.findById(id) { user ->
+                if (user != null) {
+                    if (req.firstName != null) user.firstName = req.firstName
+                    if (req.lastName != null) user.lastName = req.lastName
+                    UserRepository.update(user)
+                    userLens.inject(user, Response(Status.OK))
+                } else {
+                    val error = Error(code = 404, message = "User not found")
+                    errorLens.inject(error, Response(Status.NOT_FOUND))
+                }
+            } as Response
 
         }
 
