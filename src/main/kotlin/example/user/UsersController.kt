@@ -58,10 +58,17 @@ object UsersController {
             }
         }
 
+        val remove: HttpHandler = { request ->
+            val id = pathId(request)
+            UserRepository.remove(id)
+            Response(Status.OK)
+        }
+
         return org.http4k.routing.routes(
-                "/"     to Method.POST  bind register,
-                "/{id}" to Method.GET   bind findById,
-                "/{id}" to Method.PUT   bind update
+            "/"     to Method.POST      bind register,
+            "/{id}" to Method.GET       bind findById,
+            "/{id}" to Method.PUT       bind update,
+            "/{id}" to Method.DELETE    bind remove
         )
     }
 }
