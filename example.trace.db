@@ -1,0 +1,283 @@
+2017-07-14 07:58:24 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE USERS (
+    ID          LONG            PRIMARY KEY
+    EMAIL[*]       VARCHAR(128)    NOT NULL,
+    FIRSTNAME   VARCHAR(32)     NOT NULL,
+    LASTNAME    VARCHAR(64)     NOT NULL
+) "; expected "HASH, AUTO_INCREMENT, NOT, NULL, CHECK, REFERENCES, ,, )"; SQL statement:
+create table users (
+    id          long            primary key
+    email       varchar(128)    not null,
+    firstName   varchar(32)     not null,
+    lastName    varchar(64)     not null
+) [42001-196]
+2017-07-14 07:59:29 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE USERS (
+    ID          INT             PRIMARY KEY
+    EMAIL[*]       VARCHAR(128)    NOT NULL,
+    FIRSTNAME   VARCHAR(32)     NOT NULL,
+    LASTNAME    VARCHAR(64)     NOT NULL
+) "; expected "HASH, AUTO_INCREMENT, NOT, NULL, CHECK, REFERENCES, ,, )"; SQL statement:
+create table users (
+    id          int             primary key
+    email       varchar(128)    not null,
+    firstName   varchar(32)     not null,
+    lastName    varchar(64)     not null
+) [42001-196]
+2017-07-14 08:54:01 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE USERS (
+    ID          VARCHAR(36)     PRIMARY KEY,
+    EMAIL       VARCHAR(128)    NOT NULL,
+    FIRSTNAME   VARCHAR(32)     NOT NULL,
+    LASTNAME    VARCHAR(64)     NOT NULL,
+
+    CREATED     TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    UPDATED     TIMESTAMP       DEFAULT 0 ON[*] UPDATE CURRENT_TIMESTAMP
+) "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, ILIKE, REGEXP, IS, IN, BETWEEN, AND, OR, NOT, NULL, AUTO_INCREMENT, BIGSERIAL, SERIAL, IDENTITY, NULL_TO_DEFAULT, SEQUENCE, SELECTIVITY, COMMENT, CONSTRAINT, PRIMARY, UNIQUE, NOT, NULL, CHECK, REFERENCES, ,, )"; SQL statement:
+create table users (
+    id          varchar(36)     primary key,
+    email       varchar(128)    not null,
+    firstName   varchar(32)     not null,
+    lastName    varchar(64)     not null,
+
+    created     timestamp       default current_timestamp,
+    updated     timestamp       default 0 on update current_timestamp
+) [42001-196]
+2017-07-14 09:13:59 database: wrong user or password; user: ""
+org.h2.message.DbException: Wrong user name or password [28000-196]
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.engine.Engine.openSession(Engine.java:104)
+	at org.h2.engine.Engine.openSession(Engine.java:176)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:154)
+	at org.h2.engine.Engine.createSession(Engine.java:137)
+	at org.h2.engine.Engine.createSession(Engine.java:27)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:354)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:116)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:100)
+	at org.h2.Driver.connect(Driver.java:69)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at org.jetbrains.exposed.sql.Database$Companion$connect$7.invoke(Database.kt:83)
+	at org.jetbrains.exposed.sql.Database$Companion$connect$7.invoke(Database.kt:53)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction$connection$2.invoke(ThreadLocalTransactionManager.kt:23)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction$connection$2.invoke(ThreadLocalTransactionManager.kt:20)
+	at kotlin.UnsafeLazyImpl.getValue(Lazy.kt:153)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction.getConnection(ThreadLocalTransactionManager.kt)
+	at org.jetbrains.exposed.sql.Transaction.getConnection(Transaction.kt)
+	at org.jetbrains.exposed.sql.Database.getMetadata$exposed_main(Database.kt:16)
+	at org.jetbrains.exposed.sql.Database$url$2.invoke(Database.kt:25)
+	at org.jetbrains.exposed.sql.Database$url$2.invoke(Database.kt:14)
+	at kotlin.SynchronizedLazyImpl.getValue(Lazy.kt:130)
+	at org.jetbrains.exposed.sql.Database.getUrl(Database.kt)
+	at org.jetbrains.exposed.sql.Database$dialect$2.invoke(Database.kt:28)
+	at org.jetbrains.exposed.sql.Database$dialect$2.invoke(Database.kt:14)
+	at kotlin.SynchronizedLazyImpl.getValue(Lazy.kt:130)
+	at org.jetbrains.exposed.sql.Database.getDialect$exposed_main(Database.kt)
+	at org.jetbrains.exposed.sql.statements.InsertStatement.prepareSQL(InsertStatement.kt:43)
+	at org.jetbrains.exposed.sql.statements.Statement.executeIn$exposed_main(Statement.kt:47)
+	at org.jetbrains.exposed.sql.Transaction.exec(Transaction.kt:108)
+	at org.jetbrains.exposed.sql.Transaction.exec(Transaction.kt:102)
+	at org.jetbrains.exposed.sql.statements.Statement.execute(Statement.kt:28)
+	at org.jetbrains.exposed.sql.QueriesKt.insert(Queries.kt:27)
+	at example.user.UserRepository$create$1.invoke(UserRepository.kt:18)
+	at example.user.UserRepository$create$1.invoke(UserRepository.kt:8)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.inTopLevelTransaction(ThreadLocalTransactionManager.kt:70)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.transaction(ThreadLocalTransactionManager.kt:58)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.transaction(ThreadLocalTransactionManager.kt:49)
+	at example.user.UserRepository.create(UserRepository.kt:17)
+	at example.user.UsersController$routes$register$1.invoke(UsersController.kt:23)
+	at example.user.UsersController$routes$register$1.invoke(UsersController.kt:12)
+	at org.http4k.routing.InternalKt$asRouter$1$match$1.invoke(internal.kt:101)
+	at org.http4k.routing.InternalKt$asRouter$1$match$1.invoke(internal.kt:98)
+	at org.http4k.routing.RoutingKt$routes$2$1.invoke(routing.kt:32)
+	at org.http4k.routing.RoutingKt$routes$2$1.invoke(routing.kt)
+	at org.http4k.filter.ServerFilters$CatchLensFailure$invoke$1.invoke(ServerFilters.kt:93)
+	at org.http4k.filter.ServerFilters$CatchLensFailure$invoke$1.invoke(ServerFilters.kt:90)
+	at org.http4k.core.Http4kKt$then$2.invoke(Http4k.kt:17)
+	at org.http4k.core.Http4kKt$then$2.invoke(Http4k.kt)
+	at org.http4k.filter.ServerFilters$CatchAll$invoke$1$1.invoke(ServerFilters.kt:105)
+	at org.http4k.filter.ServerFilters$CatchAll$invoke$1$1.invoke(ServerFilters.kt:100)
+	at org.http4k.core.Http4kKt$then$2.invoke(Http4k.kt:17)
+	at org.http4k.core.Http4kKt$then$2.invoke(Http4k.kt)
+	at org.http4k.server.Http4kChannelHandler.channelRead0(Netty.kt:45)
+	at org.http4k.server.Http4kChannelHandler.channelRead0(Netty.kt:38)
+	at io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:105)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:362)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:348)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:340)
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:102)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:362)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:348)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:340)
+	at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.fireChannelRead(CombinedChannelDuplexHandler.java:438)
+	at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:310)
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:284)
+	at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:253)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:362)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:348)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:340)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1334)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:362)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:348)
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:926)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:134)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:644)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:579)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:496)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:458)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:858)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:138)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.h2.jdbc.JdbcSQLException: Wrong user name or password [28000-196]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	... 85 more
+2017-07-14 09:13:59 database: wrong user or password; user: ""
+org.h2.message.DbException: Wrong user name or password [28000-196]
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.engine.Engine.openSession(Engine.java:104)
+	at org.h2.engine.Engine.openSession(Engine.java:176)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:154)
+	at org.h2.engine.Engine.createSession(Engine.java:137)
+	at org.h2.engine.Engine.createSession(Engine.java:27)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:354)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:116)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:100)
+	at org.h2.Driver.connect(Driver.java:69)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at org.jetbrains.exposed.sql.Database$Companion$connect$7.invoke(Database.kt:83)
+	at org.jetbrains.exposed.sql.Database$Companion$connect$7.invoke(Database.kt:53)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction$connection$2.invoke(ThreadLocalTransactionManager.kt:23)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction$connection$2.invoke(ThreadLocalTransactionManager.kt:20)
+	at kotlin.UnsafeLazyImpl.getValue(Lazy.kt:153)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction.getConnection(ThreadLocalTransactionManager.kt)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction.rollback(ThreadLocalTransactionManager.kt:36)
+	at org.jetbrains.exposed.sql.Transaction.rollback(Transaction.kt)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.inTopLevelTransaction(ThreadLocalTransactionManager.kt:77)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.transaction(ThreadLocalTransactionManager.kt:58)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.transaction(ThreadLocalTransactionManager.kt:49)
+	at example.user.UserRepository.create(UserRepository.kt:17)
+	at example.user.UsersController$routes$register$1.invoke(UsersController.kt:23)
+	at example.user.UsersController$routes$register$1.invoke(UsersController.kt:12)
+	at org.http4k.routing.InternalKt$asRouter$1$match$1.invoke(internal.kt:101)
+	at org.http4k.routing.InternalKt$asRouter$1$match$1.invoke(internal.kt:98)
+	at org.http4k.routing.RoutingKt$routes$2$1.invoke(routing.kt:32)
+	at org.http4k.routing.RoutingKt$routes$2$1.invoke(routing.kt)
+	at org.http4k.filter.ServerFilters$CatchLensFailure$invoke$1.invoke(ServerFilters.kt:93)
+	at org.http4k.filter.ServerFilters$CatchLensFailure$invoke$1.invoke(ServerFilters.kt:90)
+	at org.http4k.core.Http4kKt$then$2.invoke(Http4k.kt:17)
+	at org.http4k.core.Http4kKt$then$2.invoke(Http4k.kt)
+	at org.http4k.filter.ServerFilters$CatchAll$invoke$1$1.invoke(ServerFilters.kt:105)
+	at org.http4k.filter.ServerFilters$CatchAll$invoke$1$1.invoke(ServerFilters.kt:100)
+	at org.http4k.core.Http4kKt$then$2.invoke(Http4k.kt:17)
+	at org.http4k.core.Http4kKt$then$2.invoke(Http4k.kt)
+	at org.http4k.server.Http4kChannelHandler.channelRead0(Netty.kt:45)
+	at org.http4k.server.Http4kChannelHandler.channelRead0(Netty.kt:38)
+	at io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:105)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:362)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:348)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:340)
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:102)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:362)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:348)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:340)
+	at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.fireChannelRead(CombinedChannelDuplexHandler.java:438)
+	at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:310)
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:284)
+	at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:253)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:362)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:348)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:340)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1334)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:362)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:348)
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:926)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:134)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:644)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:579)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:496)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:458)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:858)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:138)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.h2.jdbc.JdbcSQLException: Wrong user name or password [28000-196]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	... 69 more
+2017-07-14 09:13:59 database: wrong user or password; user: ""
+org.h2.message.DbException: Wrong user name or password [28000-196]
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.engine.Engine.openSession(Engine.java:104)
+	at org.h2.engine.Engine.openSession(Engine.java:176)
+	at org.h2.engine.Engine.createSessionAndValidate(Engine.java:154)
+	at org.h2.engine.Engine.createSession(Engine.java:137)
+	at org.h2.engine.Engine.createSession(Engine.java:27)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:354)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:116)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:100)
+	at org.h2.Driver.connect(Driver.java:69)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at org.jetbrains.exposed.sql.Database$Companion$connect$7.invoke(Database.kt:83)
+	at org.jetbrains.exposed.sql.Database$Companion$connect$7.invoke(Database.kt:53)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction$connection$2.invoke(ThreadLocalTransactionManager.kt:23)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction$connection$2.invoke(ThreadLocalTransactionManager.kt:20)
+	at kotlin.UnsafeLazyImpl.getValue(Lazy.kt:153)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction.getConnection(ThreadLocalTransactionManager.kt)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction.close(ThreadLocalTransactionManager.kt:42)
+	at org.jetbrains.exposed.sql.Transaction.close(Transaction.kt)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.inTopLevelTransaction(ThreadLocalTransactionManager.kt:97)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.transaction(ThreadLocalTransactionManager.kt:58)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.transaction(ThreadLocalTransactionManager.kt:49)
+	at example.user.UserRepository.create(UserRepository.kt:17)
+	at example.user.UsersController$routes$register$1.invoke(UsersController.kt:23)
+	at example.user.UsersController$routes$register$1.invoke(UsersController.kt:12)
+	at org.http4k.routing.InternalKt$asRouter$1$match$1.invoke(internal.kt:101)
+	at org.http4k.routing.InternalKt$asRouter$1$match$1.invoke(internal.kt:98)
+	at org.http4k.routing.RoutingKt$routes$2$1.invoke(routing.kt:32)
+	at org.http4k.routing.RoutingKt$routes$2$1.invoke(routing.kt)
+	at org.http4k.filter.ServerFilters$CatchLensFailure$invoke$1.invoke(ServerFilters.kt:93)
+	at org.http4k.filter.ServerFilters$CatchLensFailure$invoke$1.invoke(ServerFilters.kt:90)
+	at org.http4k.core.Http4kKt$then$2.invoke(Http4k.kt:17)
+	at org.http4k.core.Http4kKt$then$2.invoke(Http4k.kt)
+	at org.http4k.filter.ServerFilters$CatchAll$invoke$1$1.invoke(ServerFilters.kt:105)
+	at org.http4k.filter.ServerFilters$CatchAll$invoke$1$1.invoke(ServerFilters.kt:100)
+	at org.http4k.core.Http4kKt$then$2.invoke(Http4k.kt:17)
+	at org.http4k.core.Http4kKt$then$2.invoke(Http4k.kt)
+	at org.http4k.server.Http4kChannelHandler.channelRead0(Netty.kt:45)
+	at org.http4k.server.Http4kChannelHandler.channelRead0(Netty.kt:38)
+	at io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:105)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:362)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:348)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:340)
+	at io.netty.handler.codec.MessageToMessageDecoder.channelRead(MessageToMessageDecoder.java:102)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:362)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:348)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:340)
+	at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.fireChannelRead(CombinedChannelDuplexHandler.java:438)
+	at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:310)
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:284)
+	at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:253)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:362)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:348)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:340)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1334)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:362)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:348)
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:926)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:134)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:644)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:579)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:496)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:458)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:858)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:138)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.h2.jdbc.JdbcSQLException: Wrong user name or password [28000-196]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	... 69 more
