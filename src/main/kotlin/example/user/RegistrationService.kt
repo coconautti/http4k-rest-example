@@ -2,13 +2,13 @@ package example.user
 
 class UserExistsException(message: String) : RuntimeException(message)
 
-object RegistrationService {
+class RegistrationService(val repository: UserRepository) {
 
     fun register(user: User) {
-        if (UserRepository.exists(user.email)) {
+        if (repository.exists(user.email)) {
             throw UserExistsException("User with email ${user.email} already exists")
         }
 
-        UserRepository.create(user)
+        repository.create(user)
     }
 }

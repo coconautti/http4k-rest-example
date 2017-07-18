@@ -1,6 +1,7 @@
 package example.user
 
 import example.common.Error
+import example.common.Registry
 import org.http4k.core.*
 import org.http4k.format.Jackson.auto
 import org.http4k.lens.Path
@@ -19,13 +20,16 @@ object UsersController {
     val userLens = Body.auto<User>().toLens()
     val errorLens = Body.auto<Error>().toLens()
 
+    val userRepository = Registry.userRepository
+    val registrationService = Registry.registrationService
+
     fun routes(): RoutingHttpHandler {
 
         val register: HttpHandler = { request ->
             try {
                 val req = registerRequest.extract(request)
                 val user = User(UUID.randomUUID().toString(), req.email, req.firstName, req.lastName)
-                RegistrationService.register(user)
+                registrationService.register(user)
                 userLens.inject(user, Response(Status.OK))
             } catch (e: UserExistsException) {
                 errorLens.inject(Error(code = 409, message = e.message), Response(Status.CONFLICT))
@@ -35,7 +39,7 @@ object UsersController {
         val findById: HttpHandler = { request ->
             try {
                 val id = pathId(request)
-                val user = UserRepository.findById(id)
+                val user = userRepository.findById(id)
                 userLens.inject(user, Response(Status.OK))
             } catch (e: UserNotFoundException) {
                 errorLens.inject(Error(code = 404, message = e.message), Response(Status.NOT_FOUND))
@@ -46,12 +50,12 @@ object UsersController {
             try {
                 val id = pathId(request)
                 val req = updateRequest(request)
-                val user = UserRepository.findById(id)
+                val user = userRepository.findById(id)
 
                 if (req.firstName != null) user.firstName = req.firstName
                 if (req.lastName != null) user.lastName = req.lastName
 
-                UserRepository.update(user)
+                userRepository.update(user)
                 userLens.inject(user, Response(Status.OK))
             } catch (e: UserNotFoundException) {
                 errorLens.inject(Error(code = 404, message = e.message), Response(Status.OK))
@@ -60,7 +64,7 @@ object UsersController {
 
         val remove: HttpHandler = { request ->
             val id = pathId(request)
-            UserRepository.remove(id)
+            userRepository.remove(id)
             Response(Status.OK)
         }
 

@@ -5,7 +5,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 class UserNotFoundException(message: String) : RuntimeException(message)
 
-object UserRepository {
+class UserRepository {
     object Users : Table() {
         val id = varchar("id", 36).primaryKey()
         val email = varchar("email", 128)
