@@ -16,3 +16,6 @@ gradle-app.setting
 # Ignore IDEA files
 .idea
 *.iml
+
+# Ignore database files
+*.db
