@@ -8,4 +8,4 @@ Key components:
 * Exposed used as SQL DSL
 * Spek for writing test with Mockito for mocking
 
-The example project can be used as a starting for building REST services. The code contains a controller for service status and another controller for an imaginary user API.
+The example project can be used as a starting point for building REST services. The code contains a controller for service status and another controller for an imaginary user API. All code is packaged by feature. Common stuff is in common package.
