@@ -1,6 +1,12 @@
 # http4k-rest-example
 
-An opinionated take on how to build REST services.
+An opinionated take on how to build REST services with Kotlin.
+
+Goals:
+
+* service should start up in less than 10 seconds
+* it should be fast to develop new features
+* code should be easy to test
 
 Key components:
 
