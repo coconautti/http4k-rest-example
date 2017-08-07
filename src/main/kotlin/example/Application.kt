@@ -1,5 +1,6 @@
 package example
 
+import example.common.ServerConfig
 import example.service.ServiceController
 import example.user.UsersController
 import org.http4k.core.then
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory
 fun main(args: Array<String>) {
     val log = LoggerFactory.getLogger("main")
 
-    Database.connect("jdbc:h2:file:./example", "org.h2.Driver", "sa", "")
+    Database.connect(ServerConfig.dbUrl, ServerConfig.dbDriver, ServerConfig.dbUsername, ServerConfig.dbPassword)
 
     val app = ServerFilters.CatchLensFailure.then(
             routes(
@@ -23,7 +24,8 @@ fun main(args: Array<String>) {
             )
     )
 
-    app.asServer(Netty(8080)).start()
+    val port = ServerConfig.port
+    app.asServer(Netty(port)).start()
 
-    log.info("Server ready at port 8080")
+    log.info("Server ready at port $port")
 }
