@@ -11,7 +11,7 @@ Goals:
 Key components:
 
 * http4k with Netty as engine and Jackson for JSON serialization
-* Exposed used as SQL DSL
-* Spek for writing test with Mockito for mocking
+* Exposed used as SQL DSL (to be replaced by sequel
+* KotlinTest for writing test with Mockito for mocking
 
 The example project can be used as a starting point for building REST services. The code contains a controller for service status and another controller for an imaginary user API. All code is packaged by feature. Common stuff is in common package.
