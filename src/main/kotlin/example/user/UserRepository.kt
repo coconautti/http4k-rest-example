@@ -1,59 +1,44 @@
 package example.user
 
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.transactions.transaction
+import coconautti.sql.Database
+import coconautti.sql.eq
 
 class UserNotFoundException(message: String) : RuntimeException(message)
 
 class UserRepository {
-    object Users : Table() {
-        val id = varchar("id", 36).primaryKey()
-        val email = varchar("email", 128)
-        val firstName = varchar("firstName", 32)
-        val lastName = varchar("lastName", 64)
-    }
 
     fun create(user: User) {
-        transaction {
-            Users.insert {
-                it[id] = user.id
-                it[email] = user.email
-                it[firstName] = user.firstName
-                it[lastName] = user.lastName
-            }
-        }
+        val (id, email, firstName, lastName) = user
+        Database.insertInto("users") {
+            columns("id", "email", "firstName", "lastName")
+            values(id, email, firstName, lastName)
+        }.execute()
     }
 
     fun update(user: User) {
-        transaction {
-            Users.update({ Users.id.eq(user.id) }) {
-                it[firstName] = user.firstName
-                it[lastName] = user.lastName
-            }
-        }
+        Database.update("users") {
+            set("firstName", user.firstName)
+            set("lastName", user.lastName)
+        }.execute()
     }
 
     fun remove(id: String) {
-        transaction {
-            Users.deleteWhere { Users.id.eq(id) }
+        Database.deleteFrom("users") {
+            where("id" eq  id)
         }
     }
 
-    fun findById(id: String): User {
-        return transaction {
-            val row = Users
-                    .select { Users.id.eq(id) }
-                    .firstOrNull()
-            row ?: throw UserNotFoundException("User not found")
-            User(row[Users.id], row[Users.email], row[Users.firstName], row[Users.lastName])
-        }
+    fun findById(id: String): User? {
+        return Database.selectFrom("users") {
+            columns("id", "email", "firstName", "lastName")
+            where("id" eq id)
+        }.fetch<User>(User::class).firstOrNull()
     }
 
     fun exists(email: String): Boolean {
-        return transaction {
-            Users
-                    .select { Users.email.eq(email) }
-                    .count() > 0
-        }
+        return Database.selectFrom("users") {
+            columns("id")
+            where("email" eq email)
+        }.query().firstOrNull() != null
     }
 }

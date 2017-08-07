@@ -8,7 +8,7 @@ repositories {
     mavenCentral()
 
     maven {
-        url 'https://dl.bintray.com/kotlin/exposed/'
+        url 'http://dl.bintray.com/coconautti/sequel'
     }
 }
 
@@ -22,7 +22,8 @@ dependencies {
     compile 'org.http4k:http4k-server-netty:2.11.2'
     compile 'org.http4k:http4k-format-jackson:2.11.2'
     compile 'com.h2database:h2:1.4.196'
-    compile 'org.jetbrains.exposed:exposed:0.8.1'
+    compile 'com.coconautti:sequel:0.1.0'
+    compile 'com.zaxxer:HikariCP:2.6.3'
     compile 'org.slf4j:slf4j-simple:1.7.25'
     testCompile 'com.nhaarman:mockito-kotlin:1.5.0'
     testCompile 'io.kotlintest:kotlintest:2.0.4'

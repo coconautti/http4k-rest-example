@@ -27,7 +27,7 @@ object UsersController {
 
         val register: HttpHandler = { request ->
             try {
-                val req = registerRequest.extract(request)
+                val req = registerRequest(request)
                 val user = User(UUID.randomUUID().toString(), req.email, req.firstName, req.lastName)
                 registrationService.register(user)
                 userLens.inject(user, Response(Status.OK))
@@ -40,6 +40,7 @@ object UsersController {
             try {
                 val id = pathId(request)
                 val user = userRepository.findById(id)
+                user ?: throw UserNotFoundException("user not found")
                 userLens.inject(user, Response(Status.OK))
             } catch (e: UserNotFoundException) {
                 errorLens.inject(Error(code = 404, message = e.message), Response(Status.NOT_FOUND))
@@ -51,6 +52,7 @@ object UsersController {
                 val id = pathId(request)
                 val req = updateRequest(request)
                 val user = userRepository.findById(id)
+                user ?: throw UserNotFoundException("user not found")
 
                 if (req.firstName != null) user.firstName = req.firstName
                 if (req.lastName != null) user.lastName = req.lastName
