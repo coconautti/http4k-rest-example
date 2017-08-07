@@ -10,8 +10,8 @@ Goals:
 
 Key components:
 
-* http4k with Netty as engine and Jackson for JSON serialization
+* [http4k](https://www.http4k.org/) with Netty as engine and Jackson for JSON serialization
 * [sequel](https://github.com/coconautti/sequel) used as SQL DSL
-* KotlinTest for writing test with Mockito for mocking
+* [KotlinTest](https://github.com/kotlintest/kotlintest) for writing test with Mockito for mocking
 
 The example project can be used as a starting point for building REST services. The code contains a controller for service status and another controller for an imaginary user API. All code is packaged by feature. Common stuff is in common package.
