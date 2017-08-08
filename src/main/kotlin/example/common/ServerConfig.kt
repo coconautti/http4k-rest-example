@@ -5,6 +5,7 @@ object ServerConfig {
     private val DEFAULT_DATABASE_URL = "jdbc:h2:file:./example"
     private val DEFAULT_DATABASE_USERNAME = "sa"
     private val DEFAULT_DATABASE_PASSWORD = ""
+    private val DEFAULT_JWT_SECRET = "secret"
 
     val port: Int
         get() = System.getProperty("server.port", DEFAULT_PORT).toInt()
@@ -17,4 +18,7 @@ object ServerConfig {
 
     val dbPassword: String
         get() = System.getProperty("server.db.password", DEFAULT_DATABASE_PASSWORD)
+
+    val jwtSecret: String
+        get() = System.getProperty("server.jwt.secret", DEFAULT_JWT_SECRET)
 }
