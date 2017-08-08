@@ -1,13 +1,15 @@
 package example.common
 
-import example.security.JWT
-import example.security.JavaJWT
-import example.user.RegistrationService
+import example.user.AuthService
+import example.user.JWT
+import example.user.JavaJWT
+import example.user.TokenAuthService
 import example.user.UserRepository
 
 object Registry {
-    val jwt: JWT = JavaJWT(ServerConfig.jwtSecret, "example")
 
     val userRepository = UserRepository()
-    val registrationService = RegistrationService(userRepository)
+
+    val jwt: JWT = JavaJWT(ServerConfig.jwtSecret, "example")
+    val authService: AuthService = TokenAuthService(userRepository, jwt)
 }

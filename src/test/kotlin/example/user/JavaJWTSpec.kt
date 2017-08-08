@@ -1,4 +1,4 @@
-package example.security
+package example.user
 
 import io.kotlintest.matchers.fail
 import io.kotlintest.matchers.shouldEqual

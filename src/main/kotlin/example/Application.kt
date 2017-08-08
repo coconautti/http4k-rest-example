@@ -3,7 +3,7 @@ package example
 import coconautti.sql.Database
 import example.common.ServerConfig
 import example.service.ServiceController
-import example.user.UsersController
+import example.user.AuthController
 import org.http4k.core.then
 import org.http4k.filter.ServerFilters
 import org.http4k.routing.bind
@@ -19,8 +19,8 @@ fun main(args: Array<String>) {
 
     val app = ServerFilters.CatchLensFailure.then(
             routes(
-                "/service"      bind ServiceController.routes(),
-                "/api/users"    bind UsersController.routes()
+                "/service"  bind ServiceController.routes(),
+                "/api/auth" bind AuthController.routes()
             )
     )
 

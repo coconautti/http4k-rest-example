@@ -7,31 +7,25 @@ class UserNotFoundException(message: String) : RuntimeException(message)
 
 class UserRepository {
 
-    fun create(user: User) {
-        val (id, email, firstName, lastName) = user
-        Database.insertInto("users") {
-            columns("id", "email", "firstName", "lastName")
-            values(id, email, firstName, lastName)
-        }.execute()
+    fun create(firstName: String, lastName: String, email: String, password: String): User {
+        val id = Database.insertInto("users") {
+            columns("firstName", "lastName", "email", "password")
+            values(firstName, lastName, email, password)
+        }.execute() as UserId
+        return User(id, firstName, lastName, email, password)
     }
 
-    fun update(user: User) {
-        Database.update("users") {
-            set("firstName", user.firstName)
-            set("lastName", user.lastName)
-        }.execute()
-    }
-
-    fun remove(id: String) {
-        Database.deleteFrom("users") {
-            where("id" eq  id)
-        }
-    }
-
-    fun findById(id: String): User? {
+    fun findById(id: UserId): User? {
         return Database.selectFrom("users") {
-            columns("id", "email", "firstName", "lastName")
+            columns("id", "firstName", "lastName", "email", "password")
             where("id" eq id)
+        }.fetch<User>(User::class).firstOrNull()
+    }
+
+    fun findByEmail(email: String): User? {
+        return Database.selectFrom("users") {
+            columns("id", "firstName", "lastName", "email", "password")
+            where("email" eq email)
         }.fetch<User>(User::class).firstOrNull()
     }
 

@@ -1,4 +1,4 @@
-package example.security
+package example.user
 
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTCreationException
