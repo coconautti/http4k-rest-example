@@ -21,7 +21,7 @@ object ServiceController {
         }
 
         return org.http4k.routing.routes(
-                "/ping" to Method.GET bind ping
+                "/ping" bind Method.GET to ping
         )
     }
 }

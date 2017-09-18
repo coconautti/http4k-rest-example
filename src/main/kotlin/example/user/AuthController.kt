@@ -46,9 +46,9 @@ object AuthController {
         })
 
         return org.http4k.routing.routes(
-                "/signup"   to Method.POST  bind signUp,
-                "/login"    to Method.POST  bind login,
-                "/me"       to Method.GET   bind me
+                "/signup"   bind Method.POST    to signUp,
+                "/login"    bind Method.POST    to login,
+                "/me"       bind Method.GET     to me
         )
     }
 }
